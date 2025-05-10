@@ -48,7 +48,21 @@ project-root/
 3. Install Dependencies:
 ```pip install -r requirements.txt```
     Include dependencies like: fastapi, uvicorn, streamlit, langchain, langchain_groq, langchain_community, python-dotenv, requests, etc.
-5. Set Up Environment Variables
+4. Set Up Environment Variables
 **Create a .env file in the root directory:
   GROQ_API_KEY=your_groq_api_key
   NOMIC_API_KEY=your_nomic_api_key
+
+## ▶️ Running the App
+1. Start Backend (FastAPI):
+```uvicorn backend.main:app --reload```
+By default, the backend runs at: http://localhost:8000
+otherwise, ```uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000```
+2. Start Frontend (Streamlit):
+```streamlit run frontend/app.py```
+
+## 🧪 Example Usage
+1. Paste 1–5 article URLs.
+2. Click “Process Articles”.
+3. Ask questions about the content.
+4. Get answers retrieved from the embedded article context.
