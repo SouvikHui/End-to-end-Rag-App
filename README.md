@@ -23,30 +23,32 @@
 project-root/
 │
 ├── backend/
-│   ├── main.py                # FastAPI server
-│   ├── models.py              # Pydantic schemas
-│   ├── fetcher.py             # URL loader
-│   ├── embedder.py            # Embedding logic
-│   ├── qa_engine.py           # RAG QA pipeline
-│   └── faiss_store/           # Saved FAISS index (Will be created automatically when the app is ran)
+│   ├── main.py # FastAPI server
+│   ├── models.py # Pydantic schemas
+│   ├── fetcher.py # URL loader
+│   ├── embedder.py # Embedding logic
+│   ├── qa_engine.py # RAG QA pipeline
+│   └── faiss_store/ # Saved FAISS index (Will be created automatically when the app is ran)
 │
 ├── frontend/
-│   └── app.py                 # Streamlit frontend
+│   └── app.py # Streamlit frontend
 │
-├── .env                       # API keys (GROQ_API_KEY, NOMIC_API_KEY)
+├── .env # API keys (GROQ_API_KEY, NOMIC_API_KEY)
 └── README.md
 
 ## ⚙️ Setup Instructions
-1. Clone the Repository
-  git clone https://github.com/SouvikHui/End-to-end-Rag-App.git
-  cd End-to-end-Rag-App
-2. Create and Activate Environment
-  conda create -n ragenv python=3.11.5
-  conda activate ragenv
-3. Install Dependencies
-  pip install -r requirements.txt
+1. Clone the Repository:
+  ```git clone https://github.com/SouvikHui/End-to-end-Rag-App.git```
+  ```cd End-to-end-Rag-App```
+
+2. Create and Activate Environment:
+  ```conda create -n ragenv python=3.11.5```
+  ```conda activate ragenv```
+
+3. Install Dependencies:
+```pip install -r requirements.txt```
     Include dependencies like: fastapi, uvicorn, streamlit, langchain, langchain_groq, langchain_community, python-dotenv, requests, etc.
-4. Set Up Environment Variables
+5. Set Up Environment Variables
 **Create a .env file in the root directory:
   GROQ_API_KEY=your_groq_api_key
   NOMIC_API_KEY=your_nomic_api_key
