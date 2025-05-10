@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+streamlit
+requests
+langchain
+langchain-community
+langchain-core
+langchain-groq
+langchain-nomic
+faiss-cpu
+unstructured
+python-dotenv
