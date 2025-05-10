@@ -26,14 +26,14 @@ project-root/
 │   ├── main.py # FastAPI server
 │   ├── models.py # Pydantic schemas
 │   ├── fetcher.py # URL loader
-│   ├── embedder.py # Embedding logic
-│   ├── qa_engine.py # RAG QA pipeline
-│   └── faiss_store/ # Saved FAISS index (Will be created automatically when the app is ran)
+│   ├── embed_data.py # Embedding logic
+│   ├── rag_qa.py # RAG QA pipeline
+│   └── faiss_store/ # Saved FAISS index (Will be created automatically when the app runs)
 │
 ├── frontend/
 │   └── app.py # Streamlit frontend
 │
-├── .env # API keys (GROQ_API_KEY, NOMIC_API_KEY)
+├── .env # Your API keys (GROQ_API_KEY, NOMIC_API_KEY)
 └── README.md
 
 ## ⚙️ Setup Instructions
