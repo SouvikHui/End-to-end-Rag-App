@@ -1,5 +1,5 @@
-# 🧠 Article Analyzer (RAG-based)
-## A lightweight full-stack Article QA System that allows users to input up to 5 article URLs, embed their content using Nomic Embeddings, and ask context-aware questions answered by a Groq LLM (Mixtral-8x7B). It uses FAISS for fast vector search and LangChain to connect components in a Retrieval-Augmented Generation (RAG) architecture.
+# 🧠 Online Article Analyzer (RAG-based)
+## A lightweight full-stack [FastAPI (backend) + Streamlit (frontend)] Article QA System that allows users to input up to 5 article URLs, embed their content using Nomic Embeddings, and ask context-aware questions answered by a Groq LLM (Mixtral-8x7B). It uses FAISS for fast vector search and LangChain to connect components in a Retrieval-Augmented Generation (RAG) architecture.
 
 ## ✨ Features
 1. 🔗 Accepts multiple article URLs (1 to 5)
