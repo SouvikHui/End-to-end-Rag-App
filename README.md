@@ -57,7 +57,7 @@ project-root/
 1. Start Backend (FastAPI):
 ```uvicorn backend.main:app --reload```
 By default, the backend runs at: http://localhost:8000
-otherwise, ```uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000```
+otherwise, use ```uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000```
 2. Start Frontend (Streamlit):
 ```streamlit run frontend/app.py```
 
