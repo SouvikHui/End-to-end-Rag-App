@@ -20,8 +20,15 @@ def process_query():
     if user_query:
         st.session_state.chat_history.append(("user", user_query))
         try:
-            # with st.spinner("Getting answer..."):
-            resp = requests.post(f"{BACKEND_URL}/ask/", json={"question": user_query})
+            # resp = requests.post(f"{BACKEND_URL}/ask/", json={"question": user_query})
+            history_text = [msg for role, msg in st.session_state.chat_history if role == "user"]
+            resp = requests.post(
+                f"{BACKEND_URL}/ask/",
+                json={
+                    "question": user_query,
+                    "chat_history": history_text  # send chat history
+                }
+            )
             if resp.status_code == 200:
                 answer = resp.json().get("answer", "No answer returned.")
                 st.session_state.chat_history.append(("assistant", answer))
@@ -32,10 +39,22 @@ def process_query():
         # Clear the input field
         st.session_state.qa_input = ""
 
-# UI: Article URL Count
+# UI: Article URL Count 
 st.title("🧠 Article Analyzer")
-# st.sidebar.text("Choose how many articles you want to analyze (max 5)")
-num_urls = st.sidebar.number_input("How many articles you want to analyze (max 5)?", min_value=1, max_value=5, value=1)
+st.sidebar.markdown(
+    """
+    <div style='text-align: center; font-weight: 800; font-size: 20px;'>
+        Provide <span style='color: blue;'>Articles</span> and 
+        <span style='background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); 
+                     -webkit-background-clip: text; 
+                     color: transparent;'>Analyse</span>
+    </div>
+    <hr style='border: 2px solid #ccc; margin-top: 8px; margin-bottom: 16px;'>
+    """,
+    unsafe_allow_html=True
+)
+
+num_urls = st.sidebar.number_input("**How many articles you want to analyze** (_max 5_)?", min_value=1, max_value=5, value=1)
 
 # Sync URL Input List Length
 if len(st.session_state.url_inputs) != num_urls:
@@ -65,25 +84,28 @@ if st.sidebar.button("Process Articles"):
     else:
         st.warning("Please enter at least one valid URL.")
 
-# Sidebar: Clear Chat Button
-if st.sidebar.button("🧹 Clear Chat"):
-    st.session_state.chat_history = []
-    st.session_state.qa_input = ""  # Clear input box
+# Sidebar: Clear Chat and Reset Buttons 
+col1, col2 = st.sidebar.columns(2)
 
-# Sidebar: Reset Button
-if st.sidebar.button("🔄 Reset"):
-    try:
-        response = requests.post(f"{BACKEND_URL}/reset/")
-        if response.status_code == 200:
-            st.success("System reset. Please reprocess articles.")
-            st.session_state.ready_for_qa = False
-            st.session_state.chat_history = []
-            st.session_state.url_inputs = [""] * num_urls  # Reset URLs too
-            st.session_state.qa_input = ""  # Reset input box
-        else:
-            st.error("Reset failed.")
-    except requests.exceptions.RequestException:
-        st.error("Connection error: Could not reach backend.")
+with col1:
+    if st.button("🧹 Clear Chat"):
+        st.session_state.chat_history = []
+        st.session_state.qa_input = ""  # Clear input box
+with col2:
+    if st.button("🔄 Reset"):
+        try:
+            response = requests.post(f"{BACKEND_URL}/reset/")
+            if response.status_code == 200:
+                st.success("System reset. Please reprocess articles.")
+                st.session_state.ready_for_qa = False
+                st.session_state.chat_history = []
+                st.session_state.url_inputs = [""] * num_urls  # Reset URLs too
+                st.session_state.qa_input = ""  # Reset input box
+            else:
+                st.error("Reset failed.")
+        except requests.exceptions.RequestException:
+            st.error("Connection error: Could not reach backend.")
+
 
 # Chat Section
 if st.session_state.get("ready_for_qa"):
