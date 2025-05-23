@@ -20,6 +20,7 @@
 | Loader     | Pypdf, BeautifulSoup                |
 
 ## 📁 Project Structure
+```
 project-root/
 │
 ├── backend/
@@ -35,7 +36,7 @@ project-root/
 │
 ├── .env # Your API keys (GROQ_API_KEY, NOMIC_API_KEY)
 └── README.md
-
+```
 ## ⚙️ Setup Instructions
 1. Clone the Repository:
   ```git clone https://github.com/SouvikHui/End-to-end-Rag-App.git```
