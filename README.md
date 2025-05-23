@@ -39,6 +39,7 @@ project-root/
 │
 ├── .env # Your API keys (GROQ_API_KEY, NOMIC_API_KEY)
 └── README.md
+</details>
 ```
 ## ⚙️ Setup Instructions
 1. Clone the Repository:
