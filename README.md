@@ -20,6 +20,9 @@
 | Loader     | Pypdf, BeautifulSoup                |
 
 ## 📁 Project Structure
+<details>
+<summary>📁 Click to expand project structure</summary>
+
 ```
 project-root/
 │
