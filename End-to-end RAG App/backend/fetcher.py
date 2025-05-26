@@ -2,6 +2,10 @@ import requests
 from typing import List
 from langchain.docstore.document import Document
 from bs4 import BeautifulSoup
+from fastapi import UploadFile
+from io import BytesIO
+import docx  # python-docx
+from pypdf import PdfReader
 # import mimetypes
 
 def load_urls(urls:List[str]) -> List[Document]:
@@ -30,4 +34,26 @@ def load_urls(urls:List[str]) -> List[Document]:
 
         except Exception as e:
             print(f"[!] Failed to process URL: {url} - Error: {str(e)}")
+
+    return docs
+
+# Uploaded Files
+async def process_uploaded_file(file: UploadFile) -> List[Document]:
+    content = await file.read()
+    file_type = file.filename.lower()
+    docs = []
+    if file_type.endswith(".pdf"):
+        reader = PdfReader(BytesIO(content))
+        text = "\n".join([p.extract_text() for p in reader.pages if p.extract_text()])
+
+    elif file_type.endswith(".txt"):
+        text = content.decode("utf-8")
+
+    elif file_type.endswith(".docx"):
+        doc = docx.Document(BytesIO(content))
+        text = "\n".join([p.text for p in doc.paragraphs])
+    else:
+        raise ValueError("Unsupported file type")
+    docs.append(Document(page_content=text, metadata={"source": file.filename}))
+
     return docs
