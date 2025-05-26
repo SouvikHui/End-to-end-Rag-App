@@ -12,7 +12,7 @@ from langchain_core.output_parsers import StrOutputParser
 load_dotenv()
 
 class ArticleQAEngine:
-    def __init__(self, vector_path: str = "faiss_store.pkl"):
+    def __init__(self, vector_path: str):
         self.vector_path = vector_path
         self.retriever = None
         self.llm = self._load_llm()
@@ -47,7 +47,7 @@ class ArticleQAEngine:
             <Shortened quoted text from the article>
 
             Source:
-            <URL of the quoted article>
+            <URL or source of the quoted article>
 
             Explanation:
             <Explanation and additional insights based on the quote>
@@ -73,8 +73,11 @@ class ArticleQAEngine:
             ("human", "{input}")
         ])
 
+    # def _format_docs(self, docs):
+    #     return "\n\n".join(doc.page_content for doc in docs)
+
     def _format_docs(self,docs:List[Document],**kwargs):
-        return '\n\n'.join(f"[Source:{doc.metadata.get('source')}]\n{doc.page_content}" for doc in docs)
+        return '\n\n'.join(f" {doc.metadata.get('source')}]\n{doc.page_content}" for doc in docs)
     
     def _build_chain(self):
         if self.retriever is None:
@@ -88,11 +91,6 @@ class ArticleQAEngine:
             | self.llm
             | StrOutputParser()
         )
-
-    # def answer_question(self, query: str) -> str:
-    #     if self.rag_chain is None:
-    #         raise ValueError("RAG chain not built. Please process URLs first.")
-    #     return self.rag_chain.invoke(query)
 
     def answer_question(self, query: str, chat_history: List[str] = None) -> str:
         """
@@ -108,7 +106,6 @@ class ArticleQAEngine:
             if self.last_question:
                 # Answer with LLM knowledge base only, no RAG context
                 answer = self.llm.invoke(self.last_question)
-                # res = answer.content
                 return f"📚 From my own knowledge:\n\n{answer.content}\n\n_(Please verify externally.)_"
             else:
                 return "Sorry, I don't have your previous question. Please re-ask it."
@@ -133,6 +130,8 @@ class ArticleQAEngine:
         positive_keywords = ["yes", "sure", "okay", "go ahead", "please do", "alright"]
         return any(kw in user_input.lower() for kw in positive_keywords)
     
-    def set_retriever_from_local(self):
-        self.retriever = self._load_retriever()
-        self.rag_chain = self._build_chain()
+    def set_retriever_from_local(self,vector_path):
+        if os.path.exists(vector_path):
+            self.vector_path = vector_path
+            self.retriever = self._load_retriever()
+            self.rag_chain = self._build_chain()
