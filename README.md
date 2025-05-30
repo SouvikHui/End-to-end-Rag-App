@@ -75,7 +75,7 @@ otherwise, use ```uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 
 ## 🧪 Example Usage
 1. Paste 1–5 article URLs.
-2. Or upload a file from local machine ()
+2. Or upload a file from local machine (PDF/DOCX/TXT)
 3. Or input a YouTube video link (will transcribe audio)
 4. Or upload an audio file (MP3/WAV)
 5. Click “Process Articles”.
@@ -83,6 +83,7 @@ otherwise, use ```uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 7. Get answers retrieved from the embedded article context.
 
 ## 📌 Coming Soon
-- 🧾 PDF file support (multi-document QA)
+- 📊 .xls/.xlsx file support for tabular QA
+- 🧾 Multiple attachment file support (multi-document QA)
 - 🗣️ Speaker diarization for meetings
 - 🧠 Multi-agent LLM QA chains
