@@ -96,7 +96,7 @@ if input_mode == "URL":
 elif input_mode == "File":
     st.sidebar.title("📄 Process Uploaded Article")
     with st.sidebar.container():
-        uploaded_file = st.sidebar.file_uploader("**Choose a file**", type=["txt", "pdf", "docx"])
+        uploaded_file = st.sidebar.file_uploader("**Choose a file**", type=["txt", "pdf", "docx", "csv","xls", "xlsx"])
         procss_button = st.sidebar.button("📁📝 **Upload and Process** 🧠")
         if uploaded_file and procss_button:
             files = {"file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
