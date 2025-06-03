@@ -43,15 +43,23 @@ async def process_uploaded_file(file: UploadFile) -> List[Document]:
     file_type = file.filename.lower()
     docs = []
     if file_type.endswith(".pdf"):
-        reader = PdfReader(BytesIO(content))
-        text = "\n".join([p.extract_text() for p in reader.pages if p.extract_text()])
-
+        pdf_reader = PdfReader(BytesIO(content))
+        text = "\n".join([p.extract_text() for p in pdf_reader.pages if p.extract_text()])
     elif file_type.endswith(".txt"):
         text = content.decode("utf-8")
-
     elif file_type.endswith(".docx"):
         doc = docx.Document(BytesIO(content))
         text = "\n".join([p.text for p in doc.paragraphs])
+    elif file_type.endswith((".csv",".xls", ".xlsx")):
+        csv_reader = BytesIO(content)
+        try:
+            if file_type.endswith(".csv"):
+                df = pd.read_csv(csv_reader)
+            elif file_type.endswith((".xls", ".xlsx")):
+                df = pd.read_excel(csv_reader)
+            text = df.to_string(index=False)
+        except Exception as e:
+            text = f"Error reading spreadsheet: {str(e)}"
     else:
         raise ValueError("Unsupported file type")
     docs.append(Document(page_content=text, metadata={"source": file.filename}))
