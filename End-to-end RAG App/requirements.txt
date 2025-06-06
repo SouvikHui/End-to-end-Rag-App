@@ -1,5 +1,7 @@
+asyncio
 fastapi
 uvicorn
+groq
 streamlit
 requests
 langchain
@@ -9,4 +11,8 @@ langchain-groq
 langchain-nomic
 faiss-cpu
 unstructured
+pytube
+yt-dlp
 python-dotenv
+python-docx
+pypdf
