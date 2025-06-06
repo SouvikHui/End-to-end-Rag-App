@@ -44,6 +44,7 @@ project-root/
 │   └── app.py # Streamlit frontend
 │
 ├── .env # Your API keys (GROQ_API_KEY, NOMIC_API_KEY)
+├── requirements.txt
 └── README.md
 ```
 </details>
